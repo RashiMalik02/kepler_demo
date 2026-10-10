@@ -31,7 +31,7 @@ func (h *chargeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	id := newChargeID()
 	if err := h.db.recordCharge(r.Context(), id, req.AccountID, total, req.Items); err != nil {
-		slog.Error("charge failed", "charge_id", id, "err", err)
+		slog.Error("charge failed", "charge_id", id, "account_id", req.AccountID, "err", err)
 		http.Error(w, `{"error":"internal error"}`, http.StatusInternalServerError)
 		return
 	}
